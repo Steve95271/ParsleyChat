@@ -1,0 +1,9 @@
+# Step 1: Change the following username and password to your own
+# Step 2: Change this file name to application-local.yaml
+
+parsley:
+  datasource:
+    username: root
+    password: 12345678
+    ipAddr: localhost
+    port: 3306

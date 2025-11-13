@@ -1,0 +1,18 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: parsley-char
+  profiles:
+    active: local
+  datasource:
+    username: ${parsley.datasource.username}
+    password: ${parsley.datasource.password}
+    url: jdbc:mysql://${parsley.datasource.ipAddr}:${parsley.datasource.port}/parsley-chat-db?characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true&
+    driver-class-name: com.mysql.cj.jdbc.Driver
+# mybatis config
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+    default-executor-type: simple

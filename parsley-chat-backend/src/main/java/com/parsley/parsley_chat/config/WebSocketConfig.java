@@ -1,4 +1,4 @@
-package com.parsley.parsley_chat;
+package com.parsley.parsley_chat.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
