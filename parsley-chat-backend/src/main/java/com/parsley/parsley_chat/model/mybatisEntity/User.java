@@ -1,10 +1,8 @@
-package com.parsley.parsley_chat.entity;
+package com.parsley.parsley_chat.model.mybatisEntity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.List;
 
 @Data
 @NoArgsConstructor
