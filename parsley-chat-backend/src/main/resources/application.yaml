@@ -8,9 +8,17 @@ spring:
   datasource:
     username: ${parsley.datasource.username}
     password: ${parsley.datasource.password}
-    url: jdbc:mysql://${parsley.datasource.ipAddr}:${parsley.datasource.port}/parsley-chat-db?characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true&
-    driver-class-name: com.mysql.cj.jdbc.Driver
-# mybatis config
+    url: jdbc:postgresql://${parsley.datasource.ipAddr}:${parsley.datasource.port}/parsley_chat?characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true&
+  # JPA/Hibernate
+  jpa:
+    hibernate:
+      ddl-auto: validate  # Validate schema without modifying it
+    show-sql: true        # Log SQL queries
+    properties:
+      hibernate:
+        format_sql: true  # Format SQL logs for readability
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+# mybatis
 mybatis:
   mapper-locations: classpath:mapper/*.xml
   configuration:
