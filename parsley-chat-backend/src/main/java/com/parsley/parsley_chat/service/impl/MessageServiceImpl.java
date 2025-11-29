@@ -1,17 +1,17 @@
 package com.parsley.parsley_chat.service.impl;
 
-import cn.hutool.core.date.DateTime;
-import cn.hutool.core.lang.Snowflake;
-import com.parsley.parsley_chat.entity.Message;
-import com.parsley.parsley_chat.mapper.MessageMapper;
+import com.parsley.parsley_chat.model.jpaEntity.Message;
 import com.parsley.parsley_chat.model.requestEntity.MessageRequest;
 import com.parsley.parsley_chat.model.responseEntity.MessageResponse;
+import com.parsley.parsley_chat.repository.MessageRepository;
 import com.parsley.parsley_chat.service.MessageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,24 +19,23 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MessageServiceImpl implements MessageService {
 
-    private final Snowflake snowflake;
-    private final MessageMapper messageMapper;
+    private final MessageRepository messageRepository;
     private final SimpMessagingTemplate template;
 
     @Override
     public void saveAndSendMessage(Long roomId, MessageRequest messageRequest) {
         // Convert message request to message entity
-        Message newMessage = new Message(
-                snowflake.nextId(),
-                messageRequest.getRoomId(),
-                1L, // TODO we need to get the sender Id from messageRequest
-                messageRequest.getSenderName(),
-                messageRequest.getMessage(),
-                LocalDateTime.now()
-        );
+        Message newMessage = Message
+                .builder()
+                .roomId(messageRequest.getRoomId())
+                .senderId(1L) // TODO we need to get the sender Id from messageRequest
+                .senderName(messageRequest.getSenderName())
+                .content(messageRequest.getMessage())
+                .timestamp(LocalDateTime.now(ZoneOffset.UTC))
+                .build();
 
         // Operate save message
-        messageMapper.saveMessage(newMessage);
+        messageRepository.save(newMessage);
 
         // send to message queue
         // TODO change the messageRequest object to the message
@@ -47,7 +46,7 @@ public class MessageServiceImpl implements MessageService {
     @Override
     public void getChatHistoryByRoomId(Long roomId) {
         // Query the chat history by room id
-        List<Message> chatHistory = messageMapper.getChatHistoryByRoomId(roomId);
+        List<Message> chatHistory = messageRepository.findByRoomIdOrderByTimestampAsc(roomId);
 
         // Convert to response object
         List<MessageResponse> chatHistoryResponse = new ArrayList<>();
