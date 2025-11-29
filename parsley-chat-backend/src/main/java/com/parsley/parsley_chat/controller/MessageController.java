@@ -1,17 +1,13 @@
 package com.parsley.parsley_chat.controller;
 
-import com.parsley.parsley_chat.entity.Message;
 import com.parsley.parsley_chat.model.requestEntity.MessageRequest;
 import com.parsley.parsley_chat.service.MessageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 @RequestMapping
 @RestController
