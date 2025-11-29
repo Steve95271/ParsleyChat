@@ -4,9 +4,8 @@
 
 <mapper namespace="com.parsley.parsley_chat.mapper.MessageMapper">
 
-    <insert id="saveMessage" parameterType="com.parsley.parsley_chat.entity.Message">
-        INSERT INTO message (
-            id,
+    <insert id="saveMessage" parameterType="com.parsley.parsley_chat.model.mybatisEntity.Message">
+        INSERT INTO messages (
             room_id,
             sender_id,
             sender_name,
@@ -14,7 +13,6 @@
             time_stamp
         )
         VALUES (
-            #{id},
             #{roomId},
             #{senderId},
             #{senderName},
@@ -23,9 +21,9 @@
         )
     </insert>
 
-    <select id="getChatHistoryByRoomId" resultType="com.parsley.parsley_chat.entity.Message">
+    <select id="getChatHistoryByRoomId" resultType="com.parsley.parsley_chat.model.mybatisEntity.Message">
         SELECT *
-        FROM message
+        FROM messages
         WHERE room_id = #{roomId}
     </select>
 
